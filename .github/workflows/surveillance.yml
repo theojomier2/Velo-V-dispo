@@ -1,1 +1,26 @@
+name: Surveillance Velo'v
 
+on:
+  schedule:
+    - cron: '*/2 * * * *'  # Toutes les 2 minutes
+  workflow_dispatch:
+
+jobs:
+  check-velos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+      
+      - name: Install dependencies
+        run: pip install requests
+      
+      - name: Run surveillance
+        run: python velov_surveillance.py
+      
+      - name: Done
+        run: echo "✅ Check terminé"
